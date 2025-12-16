@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        HashMap<String, Integer> map2 = new HashMap<>();
+        
+        int a = 0; 
+      
+        while(sc.hasNext()) {
+            String word = sc.next();
+            
+            if (map2.containsKey(word)) {
+                
+                map2.put(word, map2.get(word) + 1);
+            } else {
+             
+                map2.put(word, 1);
+            }
+
+
+            if (!map.containsKey(word)) { 
+                a++;
+                map.put(word, a);
+                System.out.println(word + "は" + a + "個目の単語です");
+            }
+        }
+        
+  
+        for(String key : map2.keySet()) {
+            System.out.println(key + "は" + map2.get(key) + "回出現しました");
+        }
+    }
+}
