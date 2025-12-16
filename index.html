@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゆうっち | AI Engineer / Information Science Student</title>
+    <meta name="description" content="ゆうっちのポートフォリオサイト。AI Engineer / Information Science Student。アイデアを実装し、社会に届ける。">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        dark: '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Gradient Animation */
+        .gradient-text {
+            background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Hover Effects */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Status Badge Animation */
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .status-pulse::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #22C55E;
+            border-radius: 50%;
+            animation: pulse-ring 1.5s infinite;
+        }
+        
+        /* Skill Tag */
+        .skill-tag {
+            transition: all 0.3s ease;
+        }
+        
+        /* Dual Logo Container */
+        .dual-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .dual-logo .logo-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .dual-logo .logo-divider {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, #d1d5db, transparent);
+        }
+        
+        .skill-tag:hover {
+            background-color: #2563EB;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-white text-dark">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-xl font-bold text-dark">ゆうっち</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-600 hover:text-primary transition-colors">About</a>
+                    <a href="#achievements" class="text-gray-600 hover:text-primary transition-colors">Achievements</a>
+                    <a href="#skills" class="text-gray-600 hover:text-primary transition-colors">Skills</a>
+                    <a href="#experience" class="text-gray-600 hover:text-primary transition-colors">Experience</a>
+                    <a href="#works" class="text-gray-600 hover:text-primary transition-colors">Works</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary transition-colors">Contact</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-4">
+                <a href="#about" class="block text-gray-600 hover:text-primary transition-colors">About</a>
+                <a href="#achievements" class="block text-gray-600 hover:text-primary transition-colors">Achievements</a>
+                <a href="#skills" class="block text-gray-600 hover:text-primary transition-colors">Skills</a>
+                <a href="#experience" class="block text-gray-600 hover:text-primary transition-colors">Experience</a>
+                <a href="#works" class="block text-gray-600 hover:text-primary transition-colors">Works</a>
+                <a href="#contact" class="block text-gray-600 hover:text-primary transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="fade-in">
+                <!-- Profile Icon -->
+                <div class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-8 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <img src="images/icon.jpg" alt="ゆうっち" class="w-full h-full object-cover">
+                </div>
+                
+                <!-- Name & Title -->
+                <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                    <span class="gradient-text">ゆうっち / @int_float_</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-500 font-medium mb-6">
+                    AI Engineer / Information Science Student
+                </p>
+  
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-medium hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-envelope"></i>
+                        お問い合わせ
+                    </a>
+                    <a href="#works" class="inline-flex items-center justify-center gap-2 border-2 border-gray-200 text-dark px-8 py-4 rounded-full font-medium hover:border-primary hover:text-primary transition-colors">
+                        <i class="fas fa-folder-open"></i>
+                        Works を見る
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+                <i class="fas fa-chevron-down text-gray-400 text-2xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-6 bg-gray-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">About Me</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="bg-white rounded-2xl p-8 md:p-12 shadow-sm">
+                    <div class="space-y-6 text-lg text-gray-600 leading-relaxed">
+                        <p>
+                           名前: ゆうっち
+                           <br>
+                           年齢: 19歳
+                           <br>
+                           性別: 男
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interests Section -->
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Interests</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 md:p-10 shadow-sm">
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <span class="bg-white px-5 py-3 rounded-full text-gray-700 font-medium border border-gray-200">NLP</span>
+                        <span class="bg-white px-5 py-3 rounded-full text-gray-700 font-medium border border-gray-200">Text2Text</span>
+                        <span class="bg-white px-5 py-3 rounded-full text-gray-700 font-medium border border-gray-200">マルチモーダル</span>
+                        <span class="bg-white px-5 py-3 rounded-full text-gray-700 font-medium border border-gray-200">画像生成</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-24 px-6 bg-gray-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Achievements</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="space-y-8">
+                    <!-- Achievement 1 -->
+                    <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm card-hover">
+                        <div class="flex items-start gap-6">
+                            <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-trophy text-3xl text-yellow-500"></i>
+                            </div>
+                            <div>
+                                <div class="inline-block bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                                    金賞受賞
+                                </div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-3">Local AI Hackathon #001</h3>
+                                <p class="text-gray-600 leading-relaxed">
+                                    国内最大規模（4,000人）のコミュニティ「ローカルLLMに向き合う会」主催ハッカソンにて、Local Novel LLM Projectを立ち上げ。<br>
+                                    小説創作特化AIであるNinjaシリーズ、Vecteusシリーズを開発。金賞を受賞。
+                                    <span class="font-medium text-dark">企画者</span>として企画・開発を主導。
+                                </p>
+                                <a href="https://imminent-land-e64.notion.site/001-2024-05-01-6610714cc75c4355a9bb86b7acc77b19" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-4 text-primary font-medium hover:gap-3 transition-all">
+                                    詳細を見る <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievement 2 -->
+                    <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm card-hover">
+                        <div class="flex items-start gap-6">
+                            <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center flex-shrink-0 p-2">
+                                <img src="images/ninjalogo.png" alt="Ninja Logo" class="max-h-full max-w-full object-contain">
+                            </div>
+                            <div>
+                                <div class="inline-block bg-blue-100 text-primary px-3 py-1 rounded-full text-sm font-medium mb-3">
+                                    OSS Development
+                                </div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-3">Ninja & Vecteus Development</h3>
+                                <p class="text-gray-600 leading-relaxed mb-4">
+                                    上記ハッカソンにて開発したモデル。<br>
+                                    ファインチューンとモデルマージでNinja,Vecteusシリーズを開発、オープンソースで公開しました。<br>
+                                    ダウンロード数10,000超え。小説生成だけでなく日本語チャットの能力の高さでも評価されました。
+                               
+                                </p>
+                                <div class="flex items-center gap-2 text-primary">
+                                    <i class="fas fa-download"></i>
+                                    <span class="font-semibold">累計 5,000〜10,000 ダウンロード</span>
+                                    <span class="text-gray-500">（Hugging Face）</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Skills</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Languages -->
+                    <div class="bg-gray-50 rounded-2xl p-8">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i class="fas fa-code text-xl text-primary"></i>
+                            <h3 class="text-xl font-bold">Languages</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-tag bg-white px-4 py-2 rounded-full text-gray-700 font-medium border border-gray-200 cursor-default">Python</span>
+                            <span class="skill-tag bg-white px-4 py-2 rounded-full text-gray-700 font-medium border border-gray-200 cursor-default">C#</span>
+                        </div>
+                    </div>
+                    
+                    <!-- AI/ML Ops -->
+                    <div class="bg-gray-50 rounded-2xl p-8">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i class="fas fa-brain text-xl text-primary"></i>
+                            <h3 class="text-xl font-bold">AI/ML Ops</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-tag bg-white px-4 py-2 rounded-full text-gray-700 font-medium border border-gray-200 cursor-default">Hugging Face</span>
+                            <span class="skill-tag bg-white px-4 py-2 rounded-full text-gray-700 font-medium border border-gray-200 cursor-default">Transformers</span>
+                            <span class="skill-tag bg-white px-4 py-2 rounded-full text-gray-700 font-medium border border-gray-200 cursor-default">PEFT</span>
+                            <span class="skill-tag bg-white px-4 py-2 rounded-full text-gray-700 font-medium border border-gray-200 cursor-default">LoRA Learning</span>
+                            <span class="skill-tag bg-white px-4 py-2 rounded-full text-gray-700 font-medium border border-gray-200 cursor-default">Model Merging</span>
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-24 px-6 bg-gray-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Experience</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="space-y-8">
+                    <!-- Experience Item 1 (テンプレート) -->
+                    <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm card-hover">
+                        <div class="flex flex-col md:flex-row md:items-start gap-6">
+
+                            <div class="flex-1">
+                                <ul class="text-gray-600 leading-relaxed space-y-2">
+                                    <li>・LLMのファインチューニングやLora学習ができます。</li>
+                                    <li>・LLMモデルをマージできます。</li>
+                                    <li>・HuggingFaceなどAI周りのエコシステムやライブラリを扱えます。</li>
+                                    <li>・PM的なことが少しできます。</li>
+                                    <li>・AIを使ったWebアプリ開発ができます。</li>
+                                    <li>・数式や理論は苦手です。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience Item 2 (追加用テンプレート - 必要に応じてコピーして使用) -->
+                    <!--
+                    <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm card-hover">
+                        <div class="flex flex-col md:flex-row md:items-start gap-6">
+                            <div class="flex-shrink-0">
+                                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-laptop-code text-2xl text-green-600"></i>
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <span class="text-sm text-gray-500 font-medium">YYYY年MM月</span>
+                                    <span class="block text-xs text-gray-400">〜 YYYY年MM月</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                                    カテゴリ
+                                </div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">
+                                    タイトルを入力
+                                </h3>
+                                <p class="text-gray-500 font-medium mb-3">
+                                    役職・ポジション
+                                </p>
+                                <p class="text-gray-600 leading-relaxed">
+                                    経験の詳細をここに記載してください。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section -->
+    <section id="works" class="py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">作ったもの</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Work Card 1 -->
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
+                        <div class="aspect-video bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-8">
+                            <div class="dual-logo w-full">
+                                <div class="logo-item">
+                                    <img src="images/ninjalogo.png" alt="Ninja Logo" style="height: 120px;" class="object-contain">
+                                </div>
+                                <div class="logo-divider"></div>
+                                <div class="logo-item">
+                                    <img src="images/veteus_logo.png" alt="Vecteus Logo" style="height: 120px;" class="object-contain">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-blue-100 text-primary px-3 py-1 rounded-full text-xs font-medium">LLM</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Fine-tuning</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Model merging</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Ninja & Vecteus</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Mistralをベースにファインチューニング・モデルマージを行い、日本語性能を向上、小説とチャットに特化したモデル。Hugging Faceで公開中。
+                            </p>
+                            <div class="flex flex-wrap gap-3 mt-4">
+                                <a href="https://huggingface.co/Local-Novel-LLM-project/Vecteus-v1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm">
+                                    <i class="fas fa-external-link-alt"></i> Vecteus-v1
+                                </a>
+                                <a href="https://huggingface.co/Local-Novel-LLM-project/Ninja-v1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm">
+                                    <i class="fas fa-external-link-alt"></i> Ninja
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Work Card 2 - Wabisabi -->
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
+                        <div class="aspect-video bg-white flex items-center justify-center p-6">
+                            <img src="images/wabisabi-logo.jpg" alt="Wabisabi Logo" class="max-h-full max-w-full object-contain">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-xs font-medium">LLM</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Fine-tuning</span>
+                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">Model merging</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Wabisabi</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Vecteusの後継モデル。さらなる論理性と指示追従能力を目指した。
+                            </p>
+                            <div class="flex flex-wrap gap-3 mt-4">
+                                <a href="https://huggingface.co/Local-Novel-LLM-project/WabiSabi-V1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm">
+                                    <i class="fas fa-external-link-alt"></i> WabiSabi-V1
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Work Card Placeholder -->
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border-2 border-dashed border-gray-200 flex items-center justify-center min-h-[350px]">
+                        <div class="text-center p-6">
+                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-plus text-2xl text-gray-400"></i>
+                            </div>
+                            <p class="text-gray-400 font-medium">Coming Soon...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Section -->
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Social</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <a href="https://github.com/yuumasyo" target="_blank" rel="noopener noreferrer" 
+                       class="flex items-center justify-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                        GitHub
+                    </a>
+                    <a href="https://twitter.com/int_float_" target="_blank" rel="noopener noreferrer"
+                       class="flex items-center justify-center gap-3 bg-sky-500 text-white px-8 py-4 rounded-full font-medium hover:bg-sky-600 transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                        Twitter
+                    </a>
+                    <a href="https://huggingface.co/akineAItech" target="_blank" rel="noopener noreferrer"
+                       class="flex items-center justify-center gap-3 bg-yellow-500 text-white px-8 py-4 rounded-full font-medium hover:bg-yellow-600 transition-colors">
+                        <span class="text-xl">🤗</span>
+                        Hugging Face
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-gray-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Contact</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mb-12 rounded-full"></div>
+                
+                <div class="bg-white rounded-2xl p-8 md:p-12 shadow-sm text-center">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-envelope text-3xl text-primary"></i>
+                    </div>
+                    <p class="text-xl text-gray-600 mb-8">
+                        お気軽にご連絡ください
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="mailto:contactyuuma@gmail.com" 
+                           class="inline-flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-full font-medium hover:bg-blue-700 transition-colors text-lg">
+                            <i class="fas fa-paper-plane"></i>
+                            contactyuuma@gmail.com
+                        </a>
+                        <a href="https://twitter.com/int_float_" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center gap-3 bg-sky-500 text-white px-8 py-4 rounded-full font-medium hover:bg-sky-600 transition-colors text-lg">
+                            <i class="fab fa-twitter"></i>
+                            @int_float_
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-100">
+        <div class="max-w-4xl mx-auto text-center text-gray-500 text-sm">
+            <p>&copy; 2025 ゆうっち. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Animations -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Scroll Animation Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Navbar background on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body>
+</html>
